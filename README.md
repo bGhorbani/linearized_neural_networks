@@ -9,7 +9,7 @@ python train.py --learning_rate=${rate} --max_ncg_iters=0 --max_cg_iters=750 --e
 --reg_index=${reg} --max_batch_size=${max_batch_size} --num_layers=${layers} --dataset=${dataset} --noise_ind=${noise_ind}
 
 The flags are documented inside the code. The values used for the experiments are listed in the appendix. max_ncg_iters is the number
-of newton steps to perform during training. It is a legacy functionality in the code and should be set to zero. 
+of Newton steps to perform during training. It is a legacy functionality in the code and should be set to zero. 
 
 train.py has the following dependencies:
 	-optimization_utils: Auxilliary tools for training models with CG
