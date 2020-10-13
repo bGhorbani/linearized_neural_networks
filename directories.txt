@@ -1,0 +1,7 @@
+data_dir /scratch/users/ghorbani/
+cntk_dir /scratch/users/ghorbani/
+ntk_dir /scratch/users/ghorbani/
+rf_dir /scratch/users/ghorbani/
+rkhs_dir /scratch/users/ghorbani/
+nn_dir /scratch/users/ghorbani/
+synth_dir /scratch/users/ghorbani/synth_kernels/
