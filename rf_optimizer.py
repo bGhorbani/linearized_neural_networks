@@ -1,3 +1,6 @@
+"""This file implements functionalities that allow fitting large random feature models with 
+conjugate gradient type algorithms. """
+
 import tensorflow as tf
 import numpy as np
 import sys

@@ -38,7 +38,7 @@ n = X.shape[0]
 kernel = np.zeros((n, n), dtype=np.float32)
 m = n / 10
 m = np.int(m)
-# To avoid memory overflow, we fill the kernel matrix block by block
+# To avoid memory overflow, for training data, we fill the kernel matrix block by block
 for i in range(10):
 	for j in range(10):
 		print('%d and %d'%(i, j))
@@ -46,7 +46,9 @@ for i in range(10):
 		x2 = X[j * m:(j + 1) * m, :]
 		kernel[i * m:(i + 1) * m, j * m:(j + 1) * m] = kernel_fn(x1, x2, 'ntk')
 print(kernel.shape)
-directory = '/NTK_Kernels/'
+directory = './NTK_Kernels/'
+if not os.path.exists(directory):
+	os.makedirs(directory)
 file_name = 'Train_NTK_%d_layers_%d_%s.npy'%(noise_id, num_layers, dataset)
 np.save(directory + file_name, kernel)
 

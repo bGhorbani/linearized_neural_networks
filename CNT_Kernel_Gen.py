@@ -1,5 +1,5 @@
 """
-Code for generating the Myrtle-5 convolutional neural tangent kernel.
+Code for generating the Myrtle-5 convolutional neural tangent kernel for CIFAR10.
 In order to parallelize the kernel generation process, each job generates 
 only 200 rows of the kernel and saves the result to the disk. Moreover, 
 to save computation, we only generate the upper diagonal part of the kernel
@@ -8,6 +8,13 @@ the matrix format and populate the full matrix before starting the fitting
 process.
 
 To be able to run this code at scale, GPU supported JAX is necessary.
+
+Inputs:
+	noise_index: Noise level, valid range 0 to 9
+	row_id: Index of the group of rows to be computed, valid range 0 to 249
+	model_name: Architecture name, Myrtle
+	exp_name: Name of the experiment (used for record keeping)
+	job_id: The i.d of the job (used for record keeping)
 """
 
 import numpy as onp
@@ -26,18 +33,14 @@ import neural_tangents as nt
 from neural_tangents import stax
 
 # Inputs passed to the function:
-# Noise level : valid range 0 to 9
 noise_index = onp.int(sys.argv[1])
-# Index of the row collection to be computed: valid range 0 to 249
 row_id = onp.int(sys.argv[2])
-# Architecture name: Myrtle
 model_name = sys.argv[3]
-# Name of the experiment (used for record keeping)
 exp_name = sys.argv[4]
-# The i.d of the job (used for record keeping)
 job_id = onp.int(sys.argv[5])
+
 # The directory used to save the results
-directory = '/CNN_Kernels/%s_CIFAR10_%s_%d'%(exp_name, model_name, noise_index)
+directory = './CNN_Kernels/%s_CIFAR10_%s_%d'%(exp_name, model_name, noise_index)
 if not os.path.exists(directory):
 	os.makedirs(directory)
 files = os.listdir(directory)

@@ -1,6 +1,6 @@
 """
-This code uses TensorFlow capabilities to fit NNs, CNNs,
-Random Featre Models, Neural Tangent Models to the data.
+This code uses TensorFlow to fit NNs, CNNs,
+Random Feature Models and Neural Tangent Models to the data.
 
 The code was written for python/2.7.13 and TensorFlow v 1.12
 """
@@ -396,7 +396,6 @@ class Experiment(object):
 
 	def _choose_model(self, model, reg_ind):
 		""" This function adjusts the hyper-parameters based on the dataset / model to be fitted."""
-
 		self._params['form_train_op'] = False			
 		self._optim_fun = self._ls_optimizer
 		self._optim_reg = None

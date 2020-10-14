@@ -29,7 +29,7 @@ print('The number of nodes is %d'%(N))
 print('increment size: %d'%(p))
 print('Number of iterations: %d'%(M))
 
-directory = '/CIFAR2/RF_Kernel_noise_%d'%(noise_ind)
+directory = './CIFAR2/RF_Kernel_noise_%d'%(noise_ind)
 if not os.path.exists(directory):
 	os.makedirs(directory)
 X, Y, Xtest, Ytest = prep_data('CIFAR2', False, noise_ind)

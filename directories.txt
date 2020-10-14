@@ -1,7 +1,7 @@
-data_dir /scratch/users/ghorbani/
-cntk_dir /scratch/users/ghorbani/
-ntk_dir /scratch/users/ghorbani/
-rf_dir /scratch/users/ghorbani/
-rkhs_dir /scratch/users/ghorbani/
-nn_dir /scratch/users/ghorbani/
-synth_dir /scratch/users/ghorbani/synth_kernels/
+data_dir ./
+cntk_dir ./CNN_Kernels/
+ntk_dir ./NTK_Kernels/
+rf_dir ./CIFAR2/
+rkhs_dir ./
+nn_dir ./
+synth_dir ./synth_kernels/

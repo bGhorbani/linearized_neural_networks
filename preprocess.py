@@ -1,4 +1,11 @@
-"""This file contains the code for preprocessing the data. """
+"""This file contains the code for loading and preprocessing the data. 
+Note that for the functions to run properly, the appropriate datasets should 
+already be downloaded to the correct directory:
+
+	CIFAR-10: Should be saved to ./datasets/cifar10py/
+	FMNIST: Should be saved to ./datasets/FMNIST/initial_ds/
+	synthetic data: Should be saved to ./datasets/synthetic/
+ """
 import numpy as np
 import sys
 import pickle as pickle
@@ -18,10 +25,11 @@ def unpickle(add):
 	return val
 
 def cifarTrain():
+	"""This function reads the CIFAR-10 training examples from the disk."""
 	X = []
 	Y = []
 	for i in range(1, 6):
-		data = unpickle('/datasets/cifar10py/data_batch_%d'%(i))
+		data = unpickle('./datasets/cifar10py/data_batch_%d'%(i))
 		tempX = data['data']
 		n = tempX.shape[0]
 		tempX = tempX.reshape((n, 3, 32, 32))
@@ -36,7 +44,8 @@ def cifarTrain():
 	return (Y, X)
 
 def cifarTest():
-	data = unpickle('/datasets/cifar10py/test_batch')
+	"""This function reads the CIFAR-10 test examples from the disk."""
+	data = unpickle('./datasets/cifar10py/test_batch')
 	tempX = data['data']
 	n = tempX.shape[0]
 	tempX = tempX.reshape((n, 3, 32, 32))
@@ -47,6 +56,11 @@ def cifarTest():
 	return (tempy, tempX)
 
 def cifar_input(mode, greyscale, CNN):
+	"""This function preprocesses the CIFAR-10 data. 
+	Inputs:
+		mode: 'train' or 'test'
+		greyscale: boolean. If true the images are converted to greyscale.
+		CNN: boolean. If false, the images are flattened. """
 	if mode == 'train':
 		Y, X = cifarTrain()
 	else:
@@ -73,6 +87,13 @@ def cifar_input(mode, greyscale, CNN):
 	return (Y, Z)
 
 def addHFNoise(X, mfilter, multiplier):
+	"""This function adds Gaussian noise to frequencies identified by mfilter.
+	Inputs:
+		X: A data array of size n x d. 
+		mfilter: A matrix of {0, 1} of size sqrt(d) x sqrt(d).
+		multiplier: A positive constant corresponding to noise to signal ratio.
+	Outputs:
+		Z: A data array of noisy flattened images of size n x d."""
 	n = X.shape[0]
 	d = X.shape[1]
 	n1 = np.int(np.sqrt(d))
@@ -94,6 +115,14 @@ def addHFNoise(X, mfilter, multiplier):
 	return Z
 
 def addTHNoise(X, thresh, covHalf, mu):
+	"""This function adds low-frequency Gaussian noise to greyscale images.
+	Inputs:
+		X: A data array of size n x d.
+		thresh: A frequency threshold (valid range [0, sqrt(d)]).
+		covHalf: The square root of the noise covariance.
+		mu: The mean of the noise.
+	Outputs:
+		Z: A data array of size n x d containing noise flattened images."""
 	n = X.shape[0]
 	d = X.shape[1]
 	n1 = np.int(np.sqrt(d))
@@ -112,7 +141,14 @@ def addTHNoise(X, thresh, covHalf, mu):
 	return Z
 
 def addCifarNoise(X, thresh, Shalf, mu):
-	"""X has the shape 50000 x 32 x 32 x 3"""
+	"""This function adds low frequency noise to the Cifar10 images (As described in Appendix A.6).
+	Inputs: 
+		X: The data tensor with shape n x 32 x 32 x 3.
+		thresh: Frequency threshold (valid range: [0, 32]).
+		Shalf: Square root of the covariance matrix of the noise.
+		mu: Mean of the noise. 
+	Outputs:
+		images: A tensor of n x 32 x 32 x 3 of noisy images. """
 	n = X.shape[0]    
 	n1 = X.shape[1]
 	c = X.shape[3]
@@ -136,10 +172,10 @@ def addCifarNoise(X, thresh, Shalf, mu):
 def prep_data(dataset='FMNIST', CNN=False, noise_index=0):
 	np.random.seed(2048)
 	if dataset == 'SYNTH':
-		X = np.load('/datasets/synthetic/X_train_anisotropic_1024_16_%d.npy'%(noise_index))
-		Y = np.load('/datasets/synthetic/y_train_anisotropic_1024_16_%d.npy'%(noise_index))	
-		YT = np.load('/datasets/synthetic/y_test_anisotropic_1024_16_%d.npy'%(noise_index))
-		XT = np.load('/datasets/synthetic/X_test_anisotropic_1024_16_%d.npy'%(noise_index))
+		X = np.load('./datasets/synthetic/X_train_anisotropic_1024_16_%d.npy'%(noise_index))
+		Y = np.load('./datasets/synthetic/y_train_anisotropic_1024_16_%d.npy'%(noise_index))	
+		YT = np.load('./datasets/synthetic/y_test_anisotropic_1024_16_%d.npy'%(noise_index))
+		XT = np.load('./datasets/synthetic/X_test_anisotropic_1024_16_%d.npy'%(noise_index))
 		assert Y.dtype == np.float32 and YT.dtype == np.float32
 		assert X.dtype == np.float32 and XT.dtype == np.float32
 		assert len(Y.shape) == 2 and len(YT.shape) == 2
@@ -223,10 +259,10 @@ def prep_data(dataset='FMNIST', CNN=False, noise_index=0):
 	elif dataset == 'FMNIST':
 		eps = np.linspace(0, 3, num=15)
 		print('Noise strength is %f'%(eps[noise_index]))
-		X = np.load('/datasets/FMNIST/initial_ds/X.npy')
-		Y = np.load('/datasets/FMNIST/initial_ds/Y.npy')
-		YT = np.load('/datasets/FMNIST/initial_ds/Yt.npy')
-		XT = np.load('/datasets/FMNIST/initial_ds/Xt.npy')		
+		X = np.load('./datasets/FMNIST/initial_ds/X.npy')
+		Y = np.load('./datasets/FMNIST/initial_ds/Y.npy')
+		YT = np.load('./datasets/FMNIST/initial_ds/Yt.npy')
+		XT = np.load('./datasets/FMNIST/initial_ds/Xt.npy')		
 		assert len(Y.shape) == 2 and len(YT.shape) == 2
 		assert Y.shape[1] == 1 and YT.shape[1] == 1
 
@@ -247,10 +283,10 @@ def prep_data(dataset='FMNIST', CNN=False, noise_index=0):
 		thresholds = np.arange(1, 28, step=2)		
 		thresh = thresholds[noise_index]
 		print('Chosen Threshold is %d'%(thresh))
-		X = np.load('/datasets/FMNIST/initial_ds/X.npy')
-		Y = np.load('/datasets/FMNIST/initial_ds/Y.npy')
-		YT = np.load('/datasets/FMNIST/initial_ds/Yt.npy')
-		XT = np.load('/datasets/FMNIST/initial_ds/Xt.npy')		
+		X = np.load('./datasets/FMNIST/initial_ds/X.npy')
+		Y = np.load('./datasets/FMNIST/initial_ds/Y.npy')
+		YT = np.load('./datasets/FMNIST/initial_ds/Yt.npy')
+		XT = np.load('./datasets/FMNIST/initial_ds/Xt.npy')		
 		assert len(Y.shape) == 2 and len(YT.shape) == 2
 		assert Y.shape[1] == 1 and YT.shape[1] == 1		
 		n = X.shape[0]
