@@ -12,10 +12,12 @@ The flags are documented inside the code. The values used for the experiments ar
 of Newton steps to perform during training. It is a legacy functionality in the code and should be set to zero. 
 
 train.py has the following dependencies:
-	-optimization_utils: Auxilliary tools for training models with CG
-	-neural_networks: The code for implementation of the models in TensorFlow
-	-rf_optimizer: The specialized code for training large RF models
-	-preprocess: The code for data preprocessing and noise addition
+*optimization_utils: Auxilliary tools for training models with CG
+*neural_networks: The code for implementation of the models in TensorFlow
+*rf_optimizer: The specialized code for training large RF models
+*preprocess: The code for data preprocessing and noise addition
+
+Note that to successfully run the code, the original datasets (CIFAR-10, FMNIST, synthetic data) have to be downloaded and placed in the appropriate directory as described in preprocess.py. The directory list in directories.txt has to be updated to reflect the new setting. The synthetic data can be regenerated using the included Iphyton notebook.
 
 ==================================================================================
 
