@@ -1,5 +1,5 @@
 # linearized_neural_networks
-The repository contains the code for the paper "When Do Neural Networks Outperform Kernel Methods?" (https://arxiv.org/abs/2006.13409). 
+This repository contains the code for the paper "When Do Neural Networks Outperform Kernel Methods?" (https://arxiv.org/abs/2006.13409). 
 
 To train NN, RF, NT, or CNNs the main file of interest is train.py. This file includes 
 the necessary functionalities for training / measuring the performance of the various 
@@ -19,7 +19,7 @@ train.py has the following dependencies:
 
 Note that to successfully run the code, the original datasets (CIFAR-10, FMNIST, synthetic data) have to be downloaded and placed in the appropriate directory as described in preprocess.py. The directory list in directories.txt has to be updated to reflect the new setting. The synthetic data can be regenerated using the included Iphyton notebook.
 
-==================================================================================
+===========================================================================
 
 KRR experiments are performed via Kernel_Fit.py and CNT_Kernel_Gen / NTK_Kernel_Gen / RF_Kernel_Gen:
 
